@@ -1,11 +1,14 @@
 package com.petstore.model;
 
+
+import java.util.List;
+
 public class Pet {
     private Integer id;
     private Category category;
     private String name;
-    private PhotoUrls photoUrls;
-    private Tags tags;
+    private List<String> photoUrls;
+    private List<Tags> tags;
     private Status status;
 
     public Integer getId() {
@@ -32,19 +35,11 @@ public class Pet {
         this.name = name;
     }
 
-    public PhotoUrls getPhotoUrls() {
-        return photoUrls;
-    }
-
-    public void setPhotoUrls(PhotoUrls photoUrls) {
-        this.photoUrls = photoUrls;
-    }
-
-    public Tags getTags() {
+    public List<Tags> getTags() {
         return tags;
     }
 
-    public void setTags(Tags tags) {
+    public void setTags(List<Tags> tags) {
         this.tags = tags;
     }
 
@@ -56,7 +51,15 @@ public class Pet {
         this.status = status;
     }
 
-    public Pet(Integer id, Category category, String name, PhotoUrls photoUrls, Tags tags, Status status) {
+    public List<String> getPhotoUrls() {
+        return photoUrls;
+    }
+
+    public void setPhotoUrls(List<String> photoUrls) {
+        this.photoUrls = photoUrls;
+    }
+
+    public Pet(Integer id, Category category, String name, List<String> photoUrls, List<Tags> tags, Status status) {
         this.id = id;
         this.category = category;
         this.name = name;
