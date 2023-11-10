@@ -46,7 +46,6 @@ public class BaseTest {
         List<User> users = new ArrayList<>();
         users.add(userFirst);
         users.add(userSecond);
-
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String body = ow.writeValueAsString(users);
 
