@@ -38,6 +38,31 @@ public class BaseTest {
     }
 
     @Test
+    public void createListOfNewUser() throws URISyntaxException, IOException, InterruptedException {
+        User userFirst = new User(1111, "uName1", "lName1", "fName1", "ss@ss.sss",
+                "1111", "789789", 1);
+        User userSecond = new User(2222, "uName2", "lName2", "fName2", "ss@ss.sss",
+                "2222", "789789", 2);
+        List<User> users = new ArrayList<>();
+        users.add(userFirst);
+        users.add(userSecond);
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String body = ow.writeValueAsString(users);
+
+        URI exampleUri = new URI("https://petstore.swagger.io/v2/user/createWithList");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(exampleUri)
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .header("Content-Type", "application/json")
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        Assert.assertEquals(response.statusCode(), 200, "User not created");
+    }
+
+    @Test
     public void loginUser() throws URISyntaxException, IOException, InterruptedException {
         User user = new User(111, "uName", "lName", "fName", "ss@ss.sss",
                 "111", "789789", 1);
