@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -116,6 +117,28 @@ public class BaseTest {
                 .send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
         Assert.assertEquals(response.statusCode(), 200, "Pet not created");
+    }
+
+    @Test
+    public void uploadImagePet() throws URISyntaxException, IOException, InterruptedException {
+        List<String> url = new ArrayList<>(Arrays.asList("xyz", "abc"));
+        List<Tags> tags = new ArrayList<>(Arrays.asList(new Tags(111, "newTage")));
+        Pet pet = new Pet(333, new Category(777, "newCategory"), "cat", url,
+                tags, Status.available);
+        Path imagePet = Path.of("c://tmp/pet_image.jpeg");
+
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        String body = ow.writeValueAsString(pet);
+        URI exampleUri = new URI("https://petstore.swagger.io/v2/pet/333/uploadImage");
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(exampleUri)
+                .POST(HttpRequest.BodyPublishers.ofFile(imagePet))
+                .header("Content-Type", "application/json")
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+        Assert.assertEquals(response.statusCode(), 200, "Image not uploaded");
     }
 
     @Test
