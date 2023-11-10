@@ -126,7 +126,6 @@ public class BaseTest {
         Pet pet = new Pet(333, new Category(777, "newCategory"), "cat", url,
                 tags, Status.available);
         Path imagePet = Path.of("c://tmp/pet_image.jpeg");
-
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String body = ow.writeValueAsString(pet);
         URI exampleUri = new URI("https://petstore.swagger.io/v2/pet/333/uploadImage");
